@@ -1,6 +1,9 @@
 package io.pismo.payments.web;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.pismo.payments.domain.OperationsTypes;
+import io.pismo.payments.utils.OperationsTypesDeserializer;
 
 public class TransactionInput {
 
@@ -8,7 +11,8 @@ public class TransactionInput {
     private Integer accountId;
 
     @JsonProperty(value = "operation_type_id")
-    private Integer operationTypeId;
+    @JsonDeserialize(using = OperationsTypesDeserializer.class)
+    private OperationsTypes operationType;
 
     @JsonProperty(value = "amount")
     private Double amount;
@@ -21,12 +25,12 @@ public class TransactionInput {
         this.accountId = accountId;
     }
 
-    public Integer getOperationTypeId() {
-        return operationTypeId;
+    public OperationsTypes getOperationType() {
+        return operationType;
     }
 
-    public void setOperationTypeId(Integer operationTypeId) {
-        this.operationTypeId = operationTypeId;
+    public void setOperationType(OperationsTypes operationType) {
+        this.operationType = operationType;
     }
 
     public Double getAmount() {

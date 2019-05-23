@@ -26,8 +26,7 @@ public class UpdateLimitInputBuilder {
     }
 
     private Limit getLimit(Double amount) {
-        Limit limit = new Limit();
-        limit.setAmount(amount);
+        Limit limit = new Limit(amount);
         return limit;
     }
 

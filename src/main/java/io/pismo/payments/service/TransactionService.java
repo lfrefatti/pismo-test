@@ -4,6 +4,6 @@ import io.pismo.payments.web.TransactionInput;
 
 public interface TransactionService {
 
-    void createTransaction(TransactionInput transactionInput);
+    void processTransaction(TransactionInput transactionInput);
 
 }

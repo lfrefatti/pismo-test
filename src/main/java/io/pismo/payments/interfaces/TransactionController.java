@@ -20,7 +20,7 @@ public class TransactionController {
     @PostMapping
     @ResponseStatus(CREATED)
     public void postTransaction(@RequestBody TransactionInput transactionInput){
-        transactionService.createTransaction(transactionInput);
+        transactionService.processTransaction(transactionInput);
     }
 
 }
