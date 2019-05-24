@@ -12,7 +12,7 @@
 
 ```bash
   >> mvn clean package
-  >> java -jar /target/payments-0.0.1-SNAPSHOT.jar
+  >> java -jar target/payments-0.0.1-SNAPSHOT.jar
 ```
 
 ## Running tests
