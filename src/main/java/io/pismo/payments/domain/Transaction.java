@@ -2,12 +2,11 @@ package io.pismo.payments.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "transactions")
-public class Transaction {
+public class Transaction implements Comparable{
 
     @Id
     @GeneratedValue(strategy = SEQUENCE)
@@ -18,7 +17,8 @@ public class Transaction {
     private Integer accountId;
 
     @Column(name = "OperationType_ID")
-    private Integer operationTypeId;
+    @Enumerated(EnumType.STRING)
+    private OperationsTypes operationType;
 
     @Column(name = "Amount")
     private Double amount;
@@ -48,12 +48,12 @@ public class Transaction {
         this.accountId = accountId;
     }
 
-    public Integer getOperationTypeId() {
-        return operationTypeId;
+    public OperationsTypes getOperationType() {
+        return operationType;
     }
 
-    public void setOperationTypeId(Integer operationTypeId) {
-        this.operationTypeId = operationTypeId;
+    public void setOperationType(OperationsTypes operationType) {
+        this.operationType = operationType;
     }
 
     public Double getAmount() {
@@ -86,5 +86,23 @@ public class Transaction {
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Transaction other = (Transaction) o;
+        if (this.getOperationType().getChargeOrder() < other.getOperationType().getChargeOrder()){
+            return -1;
+        } else if (this.getOperationType().getChargeOrder() < other.getOperationType().getChargeOrder()){
+            return 1;
+        } else {
+            if (this.getEventDate().isBefore(other.eventDate)){
+                return -1;
+            } else if (this.getEventDate().isAfter(other.getEventDate())){
+                return 1;
+            }
+        }
+
+        return 0;
     }
 }

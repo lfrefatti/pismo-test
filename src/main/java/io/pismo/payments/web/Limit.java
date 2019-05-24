@@ -1,4 +1,4 @@
-package io.pismo.payments.domain;
+package io.pismo.payments.web;
 
 public class Limit {
 

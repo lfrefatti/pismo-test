@@ -1,5 +1,6 @@
 package io.pismo.payments.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,8 +8,11 @@ import javax.persistence.Id;
 public class Account {
 
     @Id
+    @Column(name ="Account_ID")
     private Integer accountId;
+    @Column(name ="AvailableCreditLimit")
     private Double availableCreditLimit;
+    @Column(name ="AvailableWithdrawalLimit")
     private Double availableWithdrawalLimit;
 
     public Integer getAccountId() {

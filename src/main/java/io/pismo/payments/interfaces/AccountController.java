@@ -1,7 +1,7 @@
 package io.pismo.payments.interfaces;
 
-import io.pismo.payments.domain.AccountListWrapper;
-import io.pismo.payments.domain.UpdateLimitInput;
+import io.pismo.payments.web.AccountListWrapper;
+import io.pismo.payments.web.UpdateLimitInput;
 import io.pismo.payments.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

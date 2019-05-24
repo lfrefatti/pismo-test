@@ -1,4 +1,6 @@
-package io.pismo.payments.domain;
+package io.pismo.payments.web;
+
+import io.pismo.payments.domain.Account;
 
 import java.util.List;
 

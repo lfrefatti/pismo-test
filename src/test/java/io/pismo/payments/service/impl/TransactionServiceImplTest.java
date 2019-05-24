@@ -7,6 +7,7 @@ import io.pismo.payments.exceptions.InsufficientFundsException;
 import io.pismo.payments.exceptions.InsufficientWithdrawalLimitException;
 import io.pismo.payments.repository.TransactionRepository;
 import io.pismo.payments.service.AccountService;
+import io.pismo.payments.service.TransactionBalanceService;
 import io.pismo.payments.utils.AccountBuilder;
 import io.pismo.payments.utils.TransactionInputBuilder;
 import io.pismo.payments.web.TransactionInput;
@@ -33,12 +34,15 @@ public class TransactionServiceImplTest {
     @Mock
     private TransactionRepository transactionRepository;
 
+    @Mock
+    private TransactionBalanceService transactionBalanceService;
+
     private TransactionServiceImpl transactionService;
 
     @Before
     public void setUp(){
         initMocks(this);
-        this.transactionService = new TransactionServiceImpl(accountService, transactionRepository);
+        this.transactionService = new TransactionServiceImpl(accountService, transactionRepository, transactionBalanceService);
     }
 
     @Test

@@ -1,7 +1,7 @@
 package io.pismo.payments.utils;
 
-import io.pismo.payments.domain.Limit;
-import io.pismo.payments.domain.UpdateLimitInput;
+import io.pismo.payments.web.Limit;
+import io.pismo.payments.web.UpdateLimitInput;
 
 public class UpdateLimitInputBuilder {
 
