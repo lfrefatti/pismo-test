@@ -1,12 +1,16 @@
 package io.pismo.payments.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Entity(name = "account")
+import javax.persistence.*;
+
+import static javax.persistence.GenerationType.SEQUENCE;
+
+@Entity(name = "accounts")
 public class Account {
 
     @Id
+    @GeneratedValue(strategy = SEQUENCE)
     private Integer accountId;
     private Double availableCreditLimit;
     private Double availableWithdrawalLimit;

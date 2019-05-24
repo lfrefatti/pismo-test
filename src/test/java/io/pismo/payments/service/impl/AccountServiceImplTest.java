@@ -1,8 +1,7 @@
 package io.pismo.payments.service.impl;
 
 import io.pismo.payments.domain.Account;
-import io.pismo.payments.domain.Limit;
-import io.pismo.payments.domain.UpdateLimitInput;
+import io.pismo.payments.web.UpdateLimitInput;
 import io.pismo.payments.exceptions.NotFoundException;
 import io.pismo.payments.repository.AccountRepository;
 import io.pismo.payments.service.AccountService;

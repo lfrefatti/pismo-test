@@ -31,4 +31,13 @@ public enum OperationsTypes {
     public Integer getChargeOrder() {
         return chargeOrder;
     }
+
+    public static boolean isWithdrawal(OperationsTypes operationType){
+        return SAQUE.equals(operationType);
+    }
+
+    public static boolean isPayment(OperationsTypes operationType){
+        return PAGAMENTO.equals(operationType);
+    }
+
 }

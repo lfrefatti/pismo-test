@@ -1,4 +1,4 @@
-package io.pismo.payments.domain;
+package io.pismo.payments.web;
 
 public class Limit {
 
@@ -7,6 +7,8 @@ public class Limit {
     public Limit(Double amount) {
         this.amount = amount;
     }
+
+    public Limit(){}
 
     public Double getAmount() {
         return amount;

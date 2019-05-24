@@ -5,13 +5,18 @@ import io.pismo.payments.exceptions.InsufficientFundsException;
 import io.pismo.payments.exceptions.InsufficientWithdrawalLimitException;
 import io.pismo.payments.repository.TransactionRepository;
 import io.pismo.payments.service.AccountService;
+import io.pismo.payments.service.TransactionBalanceService;
 import io.pismo.payments.service.TransactionService;
+import io.pismo.payments.web.Limit;
+import io.pismo.payments.web.PaymentInput;
 import io.pismo.payments.web.TransactionInput;
+import io.pismo.payments.web.UpdateLimitInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 
 import static io.pismo.payments.domain.OperationsTypes.PAGAMENTO;
 import static io.pismo.payments.domain.OperationsTypes.SAQUE;
@@ -21,11 +26,13 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final AccountService accountService;
     private final TransactionRepository transactionRepository;
+    private final TransactionBalanceService transactionBalanceService;
 
     @Autowired
-    public TransactionServiceImpl(AccountService accountService, TransactionRepository transactionRepository) {
+    public TransactionServiceImpl(AccountService accountService, TransactionRepository transactionRepository, TransactionBalanceService transactionBalanceService) {
         this.accountService = accountService;
         this.transactionRepository = transactionRepository;
+        this.transactionBalanceService = transactionBalanceService;
     }
 
     @Transactional
@@ -37,7 +44,19 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction transaction = buildTransaction(transactionInput);
         transactionRepository.save(transaction);
 
-        updateLimit(transaction.getAmount(), transaction.getAccountId(), transaction.getOperationTypeId());
+        updateLimit(transaction.getAmount(), transaction.getAccountId(), transaction.getOperationType());
+        transactionBalanceService.updateTransactionBalance(transactionInput.getAccountId());
+    }
+
+    @Transactional
+    public void processPaymentTransactions(List<PaymentInput> payments){
+        payments.stream().map(paymentInput -> {
+           TransactionInput transactionInput = new TransactionInput();
+           transactionInput.setAmount(paymentInput.getAmount());
+           transactionInput.setAccountId(paymentInput.getAccountId());
+           transactionInput.setOperationType(PAGAMENTO);
+           return transactionInput;
+        }).forEach(transactionInput -> processTransaction(transactionInput));
     }
 
     protected boolean checkLimit(Account account, Double amount, OperationsTypes operationType){
@@ -52,15 +71,15 @@ public class TransactionServiceImpl implements TransactionService {
         return true;
     }
 
-    private void updateLimit(Double amount, Integer id, Integer operationId){
-        if (PAGAMENTO.getOperationTypeId().equals(operationId)){
+    private void updateLimit(Double amount, Integer id, OperationsTypes operationType){
+        if (PAGAMENTO.equals(operationType)){
             return;
         }
 
         Limit creditLimit = new Limit(amount);
 
         Limit withdrawalLimit = new Limit(0d);
-        if (SAQUE.getOperationTypeId().equals(operationId)){
+        if (SAQUE.equals(operationType)){
             withdrawalLimit.setAmount(amount);
         }
 
@@ -76,7 +95,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         Transaction transaction = new Transaction();
         transaction.setAccountId(input.getAccountId());
-        transaction.setOperationTypeId(input.getOperationType().getOperationTypeId());
+        transaction.setOperationType(input.getOperationType());
         transaction.setAmount(amount);
         transaction.setBalance(amount);
         transaction.setEventDate(LocalDate.now());
