@@ -4,7 +4,7 @@ import io.pismo.payments.domain.Transaction;
 
 import java.util.Comparator;
 
-public class TransactonComparator implements Comparator<Transaction> {
+public class TransactionComparator implements Comparator<Transaction> {
 
     @Override
     public int compare(Transaction t1, Transaction t2) {

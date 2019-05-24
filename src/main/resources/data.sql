@@ -1,0 +1,1 @@
+insert into accounts (account_id, available_credit_limit, available_withdrawal_limit) values (1, 1000, 300);

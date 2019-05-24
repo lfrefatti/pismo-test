@@ -14,6 +14,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     @Query("SELECT t FROM transactions t WHERE t.accountId = :accountId AND t.balance < 0 AND t.operationType <> 'PAGAMENTO'")
     public List<Transaction> findDebitTransactions(@Param("accountId") Integer accountId);
 
-    @Query("SELECT t FROM transactions t WHERE t.accountId = :accountId AND t.balance > 0 AND t.operationType = 'PAGAMENTO'")
+    @Query("SELECT t FROM transactions t WHERE t.accountId = :accountId AND t.balance > 0 AND t.operationType = 'PAGAMENTO' ORDER BY t.eventDate")
     public List<Transaction> findCreditTransactions(@Param("accountId") Integer accountId);
 }

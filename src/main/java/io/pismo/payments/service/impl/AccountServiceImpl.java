@@ -31,6 +31,7 @@ public class AccountServiceImpl implements AccountService {
         Account account = this.findById(id);
         account.updateAvailableCreditLimit(values.getAvailable_credit_limit().getAmount());
         account.updateAvailableWithDrawalLimit(values.getAvailable_withdrawal_limit().getAmount());
+        accountRepository.save(account);
         return account;
     }
 

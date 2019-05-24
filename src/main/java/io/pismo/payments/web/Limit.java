@@ -8,6 +8,8 @@ public class Limit {
         this.amount = amount;
     }
 
+    public Limit(){}
+
     public Double getAmount() {
         return amount;
     }

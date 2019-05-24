@@ -1,7 +1,5 @@
 package io.pismo.payments.web;
 
-import io.pismo.payments.web.Limit;
-
 public class UpdateLimitInput {
 
     private Limit available_credit_limit;
